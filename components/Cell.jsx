@@ -7,6 +7,15 @@ const CellStatus = {
   DISCARDED: "DISCARDED",
 };
 
+const renderCellContent = (status) => {
+  switch (status) {
+    case CellStatus.IDDLE:
+      return null;
+    default:
+      return <Text>{status}</Text>;
+  }
+};
+
 export const Cell = ({ size }) => {
   const [status, setStatus] = useState(CellStatus.IDDLE);
   const onCellPress = () => {
@@ -27,14 +36,13 @@ export const Cell = ({ size }) => {
       onPress={onCellPress}
       style={[styles.container, { width: size, height: size }]}
     >
-      <Text>{status}</Text>
+      {renderCellContent(status)}
     </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "grey",
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
