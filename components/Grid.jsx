@@ -13,40 +13,40 @@ export const Grid = ({ nonogram }) => {
 
   return (
     <View style={styles.container}>
-    <View style={{width: cellsContainerWidth}}>
-    <ColumnHints nonogram={nonogram} />
-    </View>
-    <View style={styles.row}>
-      <View style={{maxHeight: cellsContainerHeight}}>
-      <RowInts nonogram={nonogram} />
+      <View style={{ width: cellsContainerWidth }}>
+        <ColumnHints nonogram={nonogram} />
       </View>
-      <View
-        style={styles.cellsContainer}
-        onLayout={(event) => {
-          const { width, height } = event.nativeEvent.layout;
-          setCellsContainerWidth(width);
-          setCellsContainerHeight(height);
-        }}
-      >
-        {Array(nbOfRows)
-          .fill(0)
-          .map((_, rowIndex) => (
-            <View style={styles.row}>
-              {Array(nbOfCols)
-                .fill(0)
-                .map((_, colIndex) => (
-                  <Cell key={`${rowIndex}-${colIndex}`} size={cellSize} />
-                ))}
-            </View>
-          ))}
+      <View style={styles.row}>
+        <View style={{ maxHeight: cellsContainerHeight }}>
+          <RowInts nonogram={nonogram} />
+        </View>
+        <View
+          style={styles.cellsContainer}
+          onLayout={(event) => {
+            const { width, height } = event.nativeEvent.layout;
+            setCellsContainerWidth(width);
+            setCellsContainerHeight(height);
+          }}
+        >
+          {Array(nbOfRows)
+            .fill(0)
+            .map((_, rowIndex) => (
+              <View style={styles.row}>
+                {Array(nbOfCols)
+                  .fill(0)
+                  .map((_, colIndex) => (
+                    <Cell key={`${rowIndex}-${colIndex}`} size={cellSize} />
+                  ))}
+              </View>
+            ))}
+        </View>
       </View>
-    </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {alignItems: "flex-end"},
+  container: { alignItems: "flex-end" },
   row: { flexDirection: "row" },
-  cellsContainer: {flex: 1},
+  cellsContainer: { flex: 1 },
 });

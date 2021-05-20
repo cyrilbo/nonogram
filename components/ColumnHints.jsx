@@ -7,7 +7,9 @@ export const ColumnHints = ({ nonogram }) => {
       {nonogram.cols.map((rowHint, colIndex) => (
         <View key={colIndex} style={styles.hintContainer}>
           {rowHint.map((hint, hintIndex) => (
-            <Text key={`${colIndex} - ${hintIndex}`} style={styles.hint}>{hint}</Text>
+            <Text key={`${colIndex} - ${hintIndex}`} style={styles.hint}>
+              {hint}
+            </Text>
           ))}
         </View>
       ))}
@@ -24,6 +26,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   hint: {
-    textAlign:"center"
-  }
+    textAlign: "center",
+  },
 });
