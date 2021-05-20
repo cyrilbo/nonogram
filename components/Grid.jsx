@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Cell } from "./Cell";
 import { ColumnHints } from "./ColumnHints";
 import { RowInts } from "./RowHints";
+import { useNonogramGame } from "../nonogramGame/NonogramGameContext";
 
-export const Grid = ({ nonogram }) => {
+export const Grid = () => {
   const [cellsContainerWidth, setCellsContainerWidth] = useState(0);
   const [cellsContainerHeight, setCellsContainerHeight] = useState(0);
+  const { nonogram, toggleCell, getCellStatus } = useNonogramGame();
   const nbOfCols = nonogram.cols.length;
   const nbOfRows = nonogram.rows.length;
   const cellSize = Math.floor(cellsContainerWidth / nbOfCols);
@@ -31,11 +33,18 @@ export const Grid = ({ nonogram }) => {
           {Array(nbOfRows)
             .fill(0)
             .map((_, rowIndex) => (
-              <View style={styles.row}>
+              <View key={rowIndex} style={styles.row}>
                 {Array(nbOfCols)
                   .fill(0)
                   .map((_, colIndex) => (
-                    <Cell key={`${rowIndex}-${colIndex}`} size={cellSize} />
+                    <Cell
+                      key={`${rowIndex}-${colIndex}`}
+                      size={cellSize}
+                      onPress={() => {
+                        toggleCell(rowIndex, colIndex);
+                      }}
+                      status={getCellStatus(rowIndex, colIndex)}
+                    />
                   ))}
               </View>
             ))}

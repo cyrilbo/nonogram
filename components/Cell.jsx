@@ -1,11 +1,6 @@
-import React, { useState } from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-
-const CellStatus = {
-  IDDLE: "IDDLE",
-  SELECTED: "SELECTED",
-  DISCARDED: "DISCARDED",
-};
+import React from "react";
+import { Image, Pressable, StyleSheet, View } from "react-native";
+import { CellStatus } from "../nonogramGame/CellStatus";
 
 const renderCellContent = (status, size) => {
   switch (status) {
@@ -25,24 +20,10 @@ const renderCellContent = (status, size) => {
   }
 };
 
-export const Cell = ({ size }) => {
-  const [status, setStatus] = useState(CellStatus.IDDLE);
-  const onCellPress = () => {
-    switch (status) {
-      case CellStatus.IDDLE:
-        setStatus(CellStatus.SELECTED);
-        break;
-      case CellStatus.SELECTED:
-        setStatus(CellStatus.DISCARDED);
-        break;
-      case CellStatus.DISCARDED:
-        setStatus(CellStatus.IDDLE);
-        break;
-    }
-  };
+export const Cell = ({ size, onPress, status }) => {
   return (
     <Pressable
-      onPress={onCellPress}
+      onPress={onPress}
       style={[styles.container, { width: size, height: size }]}
     >
       {renderCellContent(status, size)}

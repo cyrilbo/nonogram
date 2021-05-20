@@ -5,8 +5,8 @@ export const RowInts = ({ nonogram }) => {
   return (
     <View style={styles.container}>
       {nonogram.rows.map((rowHint, index) => (
-        <View style={styles.hintContainer}>
-          <Text key={index}>{rowHint.join(" ")}</Text>
+        <View style={styles.hintContainer} key={index}>
+          <Text>{rowHint.join(" ")}</Text>
         </View>
       ))}
     </View>
