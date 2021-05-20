@@ -52,9 +52,20 @@ function NonogramGameProvider({ children, nonogram }) {
     return state.cells[rowIndex * nonogram.rows.length + colIndex].status;
   };
 
+  const checkGridValidity = () => {
+    return !nonogram.solution.some(
+      (cellHasToBeSelected, index) =>
+        (cellHasToBeSelected &&
+          state.cells[index].status !== CellStatus.SELECTED) ||
+        (!cellHasToBeSelected &&
+          state.cells[index].status === CellStatus.SELECTED)
+    );
+  };
+
   const value = {
     toggleCell,
     getCellStatus,
+    checkGridValidity,
     nonogram,
   };
   return (

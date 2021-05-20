@@ -5,15 +5,17 @@ import { AppName } from "./components/AppName.jsx";
 import { Grid } from "./components/Grid.jsx";
 import { NonogramGameProvider } from "./nonogramGame/NonogramGameContext.jsx";
 import { smiley } from "./nonograms/smiley.js";
+import { CheckGridButton } from "./components/CheckGridButton.jsx";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <AppName />
-      <NonogramGameProvider nonogram={smiley}>
+    <NonogramGameProvider nonogram={smiley}>
+      <View style={styles.container}>
+        <AppName />
         <Grid />
-      </NonogramGameProvider>
-    </View>
+        <CheckGridButton />
+      </View>
+    </NonogramGameProvider>
   );
 }
 
