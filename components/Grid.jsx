@@ -1,30 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import { Cell } from "./Cell";
+import { RowInts } from "./RowHints";
 
-export const Grid = ({nonogram}) => {
+export const Grid = ({ nonogram }) => {
+  const [cellsContainerWidth, setCellsContainerWidth] = useState(0);
   const nbOfCols = nonogram.cols.length;
   const nbOfRows = nonogram.rows.length;
-  const cellSize = Math.floor(Dimensions.get("window").width / nbOfCols);
+  const cellSize = Math.floor(cellsContainerWidth / nbOfCols);
 
   return (
     <View style={styles.container}>
-      {Array(nbOfRows)
-        .fill(0)
-        .map((_, rowIndex) => (
-          <View style={styles.row}>
-            {Array(nbOfCols)
-              .fill(0)
-              .map((_, colIndex) => (
-                <Cell key={`${rowIndex}-${colIndex}`} size={cellSize}/>
-              ))}
-          </View>
-        ))}
+      <RowInts nonogram={nonogram} />
+      <View
+        style={styles.cellsContainer}
+        onLayout={(event) => {
+          const { width } = event.nativeEvent.layout;
+          setCellsContainerWidth(width);
+        }}
+      >
+        {Array(nbOfRows)
+          .fill(0)
+          .map((_, rowIndex) => (
+            <View style={styles.row}>
+              {Array(nbOfCols)
+                .fill(0)
+                .map((_, colIndex) => (
+                  <Cell key={`${rowIndex}-${colIndex}`} size={cellSize} />
+                ))}
+            </View>
+          ))}
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {},
-  row: {flexDirection: "row"}
+  container: { flexDirection: "row" },
+  cellsContainer: {flex: 1},
+  row: { flexDirection: "row" },
 });
