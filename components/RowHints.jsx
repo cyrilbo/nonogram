@@ -5,7 +5,9 @@ export const RowInts = ({ nonogram }) => {
   return (
     <View style={styles.container}>
       {nonogram.rows.map((rowHint, index) => (
+        <View style={styles.hintContainer}>
         <Text key={index}>{rowHint.join(" ")}</Text>
+        </View>
       ))}
     </View>
   );
@@ -13,8 +15,12 @@ export const RowInts = ({ nonogram }) => {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "space-around",
+    flex: 1,
     alignItems: "flex-end",
     padding: 4,
   },
+  hintContainer: {
+    flex: 1,
+    justifyContent: "center",
+  }
 });
