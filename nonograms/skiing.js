@@ -24,4 +24,4 @@ export const skiing = {
     [1],
     [0]
   ]
-},
+};
