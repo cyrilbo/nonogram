@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 const CellStatus = {
   IDDLE: "IDDLE",
@@ -7,14 +7,21 @@ const CellStatus = {
   DISCARDED: "DISCARDED",
 };
 
-const renderCellContent = (status) => {
+const renderCellContent = (status, size) => {
   switch (status) {
     case CellStatus.IDDLE:
       return null;
     case CellStatus.SELECTED:
       return <View style={styles.selectedCell} />;
-    default:
-      return <Text>{status}</Text>;
+    case CellStatus.DISCARDED:
+      return (
+        <Image
+          style={styles.discardedCell}
+          source={require("../assets/cross.png")}
+          width={size}
+          height={size}
+        />
+      );
   }
 };
 
@@ -38,7 +45,7 @@ export const Cell = ({ size }) => {
       onPress={onCellPress}
       style={[styles.container, { width: size, height: size }]}
     >
-      {renderCellContent(status)}
+      {renderCellContent(status, size)}
     </Pressable>
   );
 };
@@ -53,5 +60,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#000",
     width: "100%",
     height: "100%",
+  },
+  discardedCell: {
+    resizeMode: "contain",
   },
 });
