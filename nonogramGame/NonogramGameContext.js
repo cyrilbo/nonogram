@@ -1,92 +1,13 @@
-import React, { useState, useReducer } from "react";
-import { heart } from "../nonograms/heart";
-import { helicopter } from "../nonograms/helicopter";
-import { mushroom } from "../nonograms/mushroom";
-import { oh_ho } from "../nonograms/oh_ho";
-import { skiing } from "../nonograms/skiing";
-import { smiley } from "../nonograms/smiley";
-import { CellStatus } from "./CellStatus";
+import React from "react";
 
-const availableNonograms = [smiley, helicopter, mushroom, skiing, oh_ho, heart];
-const availableNonogramsNames = availableNonograms.map(
-  (nonogram) => nonogram.name
-);
+import { CellStatus } from "./CellStatus";
+import { useNonogramReducer } from "./NonogramGameReducer";
 
 const NonogramGameContext = React.createContext();
 
-function gameReducer(state, action) {
-  switch (action.type) {
-    case "toggle": {
-      return {
-        ...state,
-        cells: state.cells.map((cell) => {
-          if (
-            cell.colIndex === action.payload.colIndex &&
-            cell.rowIndex === action.payload.rowIndex
-          ) {
-            switch (cell.status) {
-              case CellStatus.IDDLE:
-                return { ...cell, status: CellStatus.SELECTED };
-              case CellStatus.SELECTED:
-                return { ...cell, status: CellStatus.DISCARDED };
-              case CellStatus.DISCARDED:
-                return { ...cell, status: CellStatus.IDDLE };
-            }
-          } else {
-            return cell;
-          }
-        }),
-      };
-    }
-    case "change_nonogram": {
-      const newNonogram = availableNonograms.find(
-        (nonogram) => nonogram.name === action.payload.newNonogramName
-      );
-      if (!newNonogram) {
-        throw new Error(
-          `Nonogram ${
-            action.payload.newNonogramName
-          } does not exist. Here is the list of all available nonograms:\n- ${availableNonogramsNames.join(
-            "\n- "
-          )}`
-        );
-      }
-      const cells = [];
-      for (let rowIndex = 0; rowIndex < newNonogram.rows.length; rowIndex++) {
-        for (let colIndex = 0; colIndex < newNonogram.rows.length; colIndex++) {
-          cells.push({ status: CellStatus.IDDLE, colIndex, rowIndex });
-        }
-      }
-      return {
-        ...state,
-        nonogram: newNonogram,
-        cells,
-      };
-    }
-    default: {
-      throw new Error(`Unhandled action type: ${action.type}`);
-    }
-  }
-}
-
 function NonogramGameProvider({ children }) {
-  const initialCells = [];
-  for (let rowIndex = 0; rowIndex < smiley.rows.length; rowIndex++) {
-    for (let colIndex = 0; colIndex < smiley.cols.length; colIndex++) {
-      initialCells.push({ status: CellStatus.IDDLE, colIndex, rowIndex });
-    }
-  }
-
-  const [state, dispatch] = useReducer(gameReducer, {
-    nonogram: smiley,
-    cells: initialCells,
-  });
-
-  const { nonogram, cells } = state;
-
-  const toggleCell = (rowIndex, colIndex) => {
-    dispatch({ type: "toggle", payload: { rowIndex, colIndex } });
-  };
+  const { cells, nonogram, toggleCell, changeSelectedNonogram } =
+    useNonogramReducer();
 
   const getCellStatus = (rowIndex, colIndex) => {
     return cells[rowIndex * nonogram.rows.length + colIndex].status;
@@ -98,10 +19,6 @@ function NonogramGameProvider({ children }) {
         (cellHasToBeSelected && cells[index].status !== CellStatus.SELECTED) ||
         (!cellHasToBeSelected && cells[index].status === CellStatus.SELECTED)
     );
-  };
-
-  const changeSelectedNonogram = (newNonogramName) => {
-    dispatch({ type: "change_nonogram", payload: { newNonogramName } });
   };
 
   const value = {
