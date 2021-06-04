@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, View, StyleSheet, Button } from "react-native";
+import { View, StyleSheet, StatusBar } from "react-native";
 import Constants from "expo-constants";
 import { AppName } from "./components/AppName.js";
 import { Grid } from "./components/Grid.js";
@@ -12,6 +12,7 @@ import { Spacer } from "./components/Spacer.js";
 export default function App() {
   return (
     <NonogramGameProvider nonogram={smiley}>
+      <StatusBar barStyle="dark-content" />
       <View style={styles.container}>
         <AppName />
         <NonogramPicker />
