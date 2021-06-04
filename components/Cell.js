@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   discardedCell: {
+    flex: 1,
     resizeMode: "contain",
   },
 });
