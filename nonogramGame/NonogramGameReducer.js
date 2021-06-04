@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import { availableNonograms } from "../nonograms";
+import { availableNonograms, availableNonogramsNames } from "../nonograms";
 import { CellStatus } from "./CellStatus";
 
 const generateInitialCells = (nonogram) => {

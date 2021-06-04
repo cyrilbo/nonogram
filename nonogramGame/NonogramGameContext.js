@@ -1,4 +1,5 @@
 import React from "react";
+import { availableNonogramsNames } from "../nonograms";
 
 import { CellStatus } from "./CellStatus";
 import { useNonogramReducer } from "./NonogramGameReducer";
@@ -27,6 +28,7 @@ function NonogramGameProvider({ children }) {
     checkGridValidity,
     nonogram,
     changeSelectedNonogram,
+    availableNonogramsNames,
   };
   return (
     <NonogramGameContext.Provider value={value}>

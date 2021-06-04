@@ -6,12 +6,14 @@ import { Grid } from "./components/Grid.js";
 import { NonogramGameProvider } from "./nonogramGame/NonogramGameContext.js";
 import { smiley } from "./nonograms/smiley.js";
 import { CheckGridButton } from "./components/CheckGridButton.js";
+import { NonogramPicker } from "./components/NonogramPicker.js";
 
 export default function App() {
   return (
     <NonogramGameProvider nonogram={smiley}>
       <View style={styles.container}>
         <AppName />
+        <NonogramPicker />
         <Grid />
         <CheckGridButton />
       </View>
