@@ -1,5 +1,13 @@
-import * as React from "react";
+import React, { useState, useReducer } from "react";
+import { heart } from "../nonograms/heart";
+import { helicopter } from "../nonograms/helicopter";
+import { mushroom } from "../nonograms/mushroom";
+import { oh_ho } from "../nonograms/oh_ho";
+import { skiing } from "../nonograms/skiing";
+import { smiley } from "../nonograms/smiley";
 import { CellStatus } from "./CellStatus";
+
+const availableNonograms = [smiley, helicopter, mushroom, skiing, oh_ho, heart];
 
 const NonogramGameContext = React.createContext();
 
@@ -32,7 +40,14 @@ function gameReducer(state, action) {
     }
   }
 }
-function NonogramGameProvider({ children, nonogram }) {
+
+function NonogramGameProvider({ children }) {
+  const [selectedNonogramName, setSelectedNonogramName] = useState(smiley.name);
+  const nonogram =
+    availableNonograms.find(
+      (nonogram) => nonogram.name === selectedNonogramName
+    ) || smiley;
+
   const initialCells = [];
   for (let rowIndex = 0; rowIndex < nonogram.rows.length; rowIndex++) {
     for (let colIndex = 0; colIndex < nonogram.rows.length; colIndex++) {
@@ -40,7 +55,7 @@ function NonogramGameProvider({ children, nonogram }) {
     }
   }
 
-  const [state, dispatch] = React.useReducer(gameReducer, {
+  const [state, dispatch] = useReducer(gameReducer, {
     cells: initialCells,
   });
 
