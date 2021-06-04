@@ -7,6 +7,7 @@ import { NonogramGameProvider } from "./nonogramGame/NonogramGameContext.js";
 import { smiley } from "./nonograms/smiley.js";
 import { CheckGridButton } from "./components/CheckGridButton.js";
 import { NonogramPicker } from "./components/NonogramPicker.js";
+import { Spacer } from "./components/Spacer.js";
 
 export default function App() {
   return (
@@ -14,7 +15,9 @@ export default function App() {
       <View style={styles.container}>
         <AppName />
         <NonogramPicker />
+        <Spacer height={20} />
         <Grid />
+        <Spacer height={20} />
         <CheckGridButton />
       </View>
     </NonogramGameProvider>
